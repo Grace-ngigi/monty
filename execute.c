@@ -13,11 +13,11 @@ void executeMontyCode(const char* filename)
 	stack_t *stack;
 	char line[256];
 	int lineNum = 1;
-	int n;
-	char *opcode, *argument;
+	int n = 0;
+	char *opcode = NULL;
+	char *argument = NULL;
 	FILE* file = fopen(filename, "r");
 
-    /* Check if file couldn't be opened*/
 	if (file == NULL)
 	{
 		printf("Error: Can't open file %s\n", filename);
@@ -29,7 +29,7 @@ void executeMontyCode(const char* filename)
 	{
 		line[strcspn(line, "\n")] = '\0';
 		opcode = strtok(line, " ");
-		argument = strtok(NULL, " ")
+		argument = strtok(NULL, " ");
 			if (opcode == NULL || opcode[0] == '#')
 			{
 				lineNum++;

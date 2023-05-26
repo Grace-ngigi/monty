@@ -8,14 +8,14 @@
  */
 int pop(stack_t *stack)
 {
-	stack_t _temp = NULL;
+	stack_t *temp = NULL;
 	stack_t *top = NULL;
 	int n;
 
 	if (top == NULL)
 	{
 		printf("Error: Stack is empty\n");
-		exit(EXIT_FAILUE);
+		exit(EXIT_FAILURE);
 	}
 	n = stack->n;
 	temp = top;

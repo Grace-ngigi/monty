@@ -40,4 +40,12 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+int main(int argc, char* argv[]);
+void printStack(stack_t *stack);
+void executeMontyCode(const char* filename);
+void freeStack(stack_t *stack);
+int pop(stack_t *stack);
+stack_t *createStack();
+void push(stack_t *stack, int n);
+
 #endif

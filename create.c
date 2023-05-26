@@ -1,5 +1,5 @@
 #include "monty.h"
-#include <stdio,h>
+#include <stdio.h>
 #include <stdlib.h>
 /**
  * createStack - creates a new stack node
@@ -17,3 +17,4 @@ stack_t *createStack()
 		exit(EXIT_FAILURE);
 	}
 	return (newStack);
+}
