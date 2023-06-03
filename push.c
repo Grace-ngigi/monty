@@ -9,7 +9,7 @@
  * Return: nothing
  */
 
-void push(stack_t *top, int n)
+stack_t *push(stack_t *top, int n)
 {
 	stack_t *newStack;
 
@@ -20,8 +20,14 @@ void push(stack_t *top, int n)
 		exit(EXIT_FAILURE);
 	}
 	newStack->n = n;
-	newStack->next = top;
 	newStack->prev = NULL;
 	if (top != NULL)
+	{
+		newStack->next = top;
 		top->prev = newStack;
+	}
+	else
+		newStack->next = NULL;
+	top = newStack;
+	return (newStack);
 }

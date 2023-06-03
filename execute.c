@@ -8,29 +8,26 @@
  * Return: nothing
  */
 
-void executeMontyCode(const char* filename) 
+void executeMontyCode(const char *filename)
 {
-	stack_t *stack;
+	stack_t *top = NULL;
 	char line[256];
-	int lineNum = 1;
-	int n = 0;
-	char *opcode = NULL;
-	char *argument = NULL;
-	FILE* file = fopen(filename, "r");
+	int lineNum, n;
+	char *opcode, *argument, *dollar;
+	FILE *file;
 
+	file = fopen(filename, "r");
 	if (file == NULL)
 	{
 		printf("Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
-	
-	stack = createStack();
-       	while (fgets(line, sizeof(line), file) != NULL)
+	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		line[strcspn(line, "\n")] = '\0';
 		opcode = strtok(line, " ");
 		argument = strtok(NULL, " ");
-			if (opcode == NULL || opcode[0] == '#')
+			if (opcode == NULL || opcode[0] == '$')
 			{
 				lineNum++;
 				continue;
@@ -42,16 +39,26 @@ void executeMontyCode(const char* filename)
 				printf("Error: L%d: usage: push integer\n", lineNum);
 				exit(EXIT_FAILURE);
 			}
+			dollar = strchr(argument, '$');
+			if (dollar != NULL)
+				*dollar = ' ';
 			n = atoi(argument);
-			push(stack, n);
+			top = push(top, n);
 		}
 		else if (strcmp(opcode, "pop") == 0)
 		{
-			pop(stack);
+			pop(top);
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
-			printStack(stack);
+			printStack(top);
+		}
+		else if (strcmp(opcode, "pall$") == 0)
+		{
+			dollar = strchr(opcode, '$');
+			if (dollar != NULL)
+				*dollar = '\0';
+			printStack(top);
 		}
 		else
 		{
@@ -61,5 +68,5 @@ void executeMontyCode(const char* filename)
 		lineNum++;
 	}
 	fclose(file);
-	freeStack(stack);
+	freeStack(top);
 }
